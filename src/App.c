@@ -15,6 +15,8 @@ int initializeApp(App* app, int windowWidth, int windowHeight, char* windowTitle
         printf("%s", SDL_GetError());
         return 0;
     }
+    app->width = windowWidth;
+    app->height = windowHeight;
     return 1;
 }
 
@@ -26,10 +28,6 @@ int clearScreen(App* app) {
     return 1;
 }
 
-int updateScreen(App* app) {
-    if (clearScreen(app) == 0) {
-        return 0;
-    }
+void updateScreen(App* app) {
     SDL_RenderPresent(app->renderer);
-    return 1;
 }

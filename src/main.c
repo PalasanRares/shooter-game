@@ -3,14 +3,45 @@
 #include <SDL2/SDL.h>
 
 #include "App.h"
+#include "Player.h"
 
 int main() {
     App* app = malloc(sizeof(App));
-    if (initializeApp(app, 512, 512, "Shooter") == 0) {
+    initializeApp(app, 512, 512, "Shooter");
+    if (app == NULL) {
         return 0;
     }
-    while (1) {
+    Player* player = initializePlayer(25, 25);
+    if (player == NULL) {
+        return 0;
+    }
+
+    int running = 1;
+    while (running) {
         int time = SDL_GetTicks();
+
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT :
+                    running = 0;
+                    break;
+                case SDL_KEYDOWN :
+                    handlePlayerEvent(&event, player);
+                    break;
+                case SDL_KEYUP :
+                    handlePlayerEvent(&event, player);
+                    break;
+            }
+        }
+
+        if (clearScreen(app) == 0) {
+            return 0;
+        }
+        movePlayer(player);
+        if (renderPlayer(app, player) == 0) {
+            return 0;
+        }
         updateScreen(app);
 
         while (SDL_GetTicks() - time < 15) {
