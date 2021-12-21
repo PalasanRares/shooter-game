@@ -21,6 +21,7 @@ int initializeApp(App* app, int windowWidth, int windowHeight, char* windowTitle
 }
 
 int clearScreen(App* app) {
+    SDL_SetRenderDrawColor(app->renderer, 200, 200, 200, 255);
     if (SDL_RenderClear(app->renderer) != 0) {
         printf("%s", SDL_GetError());
         return 0;

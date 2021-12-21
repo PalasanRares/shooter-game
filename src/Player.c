@@ -28,6 +28,8 @@ Player* initializePlayer(int x, int y) {
     player->sprites[2].w = 128; player->sprites[2].h = 128;
 
     player->state = IDLE;
+    player->flip = SDL_FLIP_NONE;
+    player->time = SDL_GetTicks();
 
     return player;
 }
@@ -43,7 +45,9 @@ int renderPlayer(App* app, Player* player) {
     SDL_Rect destination;
     destination.x = player->x; destination.y = player->y;
     destination.w = currentFrame->w; destination.h = currentFrame->h;
-    SDL_RenderCopy(app->renderer, spriteSheet, currentFrame, &destination);
+
+    SDL_RenderCopyEx(app->renderer, spriteSheet, currentFrame, &destination, 0, NULL, player->flip);
+
     SDL_DestroyTexture(spriteSheet);
     return 1;
 }
@@ -58,11 +62,13 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
             case SDLK_LEFT :
                 if (player->xVelocity < 0) {
                     player->xVelocity = 0;
+                    player->state = IDLE;
                 }
                 break;
             case SDLK_RIGHT :
                 if (player->xVelocity > 0) {
                     player->xVelocity = 0;
+                    player->state = IDLE;
                 }
                 break;
         }
@@ -70,17 +76,43 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
     }
     switch (event->key.keysym.sym) {
         case SDLK_LEFT :
+            if (player->xVelocity >= 0) {
+                player->time = 0;
+            }
             player->xVelocity = -MOVEMENT_SPEED;
+            player->flip = SDL_FLIP_HORIZONTAL;
             break;
         case SDLK_RIGHT :
+            if (player->xVelocity <= 0) {
+                player->time = 0;
+            }
             player->xVelocity = MOVEMENT_SPEED;
+            player->flip = SDL_FLIP_NONE;
             break;
     }
 }
 
 void movePlayer(Player* player) {
+    if (player->xVelocity != 0) {
+        runningAnimation(player);
+    }
     player->x += player->xVelocity;
     player->y += player->yVelocity;
     player->collider.x = player->x;
     player->collider.y = player->y;
+}
+
+void runningAnimation(Player* player) {
+    if (SDL_GetTicks() - player->time > 400 || player->xVelocity == 0) {
+        if (player->state == IDLE) {
+            player->state = RUNNING1;
+        }
+        else if (player->state == RUNNING1) {
+            player->state = RUNNING2;
+        }
+        else if (player->state == RUNNING2) {
+            player->state = RUNNING1;
+        }
+        player->time = SDL_GetTicks();
+    }
 }

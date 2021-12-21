@@ -2,7 +2,7 @@
 #define _PLAYER_H_
 #define PLAYER_WIDTH 128
 #define PLAYER_HEIGHT 64
-#define MOVEMENT_SPEED 5
+#define MOVEMENT_SPEED 3
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -20,6 +20,9 @@ typedef struct Player {
     SDL_Rect collider;
 
     int state;
+    int flip;
+    int time;
+
 } Player;
 
 Player* initializePlayer(int x, int y);
@@ -31,5 +34,7 @@ SDL_Rect* getFrame(Player* player);
 void handlePlayerEvent(SDL_Event* event, Player* player);
 
 void movePlayer(Player* player);
+
+void runningAnimation(Player* player);
 
 #endif

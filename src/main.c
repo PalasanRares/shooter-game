@@ -51,5 +51,6 @@ int main() {
     SDL_DestroyWindow(app->window);
     SDL_DestroyRenderer(app->renderer);
     free(app);
+    free(player);
     return 1;
 }

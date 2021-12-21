@@ -7,6 +7,7 @@ typedef struct App {
     SDL_Window* window;
     SDL_Renderer* renderer;
     int width, height;
+
 } App;
 
 int initializeApp(App* app, int windowWidth, int windowHeight, char* windowTitle);
