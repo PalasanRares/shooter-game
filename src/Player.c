@@ -7,9 +7,6 @@ Player* initializePlayer(int x, int y) {
         return NULL;
     }
 
-    player->x = x;
-    player->y = y;
-
     player->xVelocity = 0;
     player->yVelocity = 0;
 
@@ -27,6 +24,12 @@ Player* initializePlayer(int x, int y) {
     player->sprites[2].x = 128; player->sprites[2].y = 0;
     player->sprites[2].w = 128; player->sprites[2].h = 128;
 
+    player->sprites[3].x = 0; player->sprites[3].y = 256;
+    player->sprites[3].w = 128; player->sprites[3].h = 128;
+
+    player->sprites[4].x = 128; player->sprites[4].y = 256;
+    player->sprites[4].w = 128; player->sprites[4].h = 128;
+
     player->state = IDLE;
     player->flip = SDL_FLIP_NONE;
     player->time = SDL_GetTicks();
@@ -41,9 +44,12 @@ int renderPlayer(App* app, Player* player) {
         return 0;
     }
 
-    SDL_Rect* currentFrame = getFrame(player);
+    // SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
+    // SDL_RenderDrawRect(app->renderer, &player->collider);
+
+    SDL_Rect* currentFrame = getPlayerFrame(player);
     SDL_Rect destination;
-    destination.x = player->x; destination.y = player->y;
+    destination.x = player->collider.x - 32; destination.y = player->collider.y;
     destination.w = currentFrame->w; destination.h = currentFrame->h;
 
     SDL_RenderCopyEx(app->renderer, spriteSheet, currentFrame, &destination, 0, NULL, player->flip);
@@ -52,7 +58,7 @@ int renderPlayer(App* app, Player* player) {
     return 1;
 }
 
-SDL_Rect* getFrame(Player* player) {
+SDL_Rect* getPlayerFrame(Player* player) {
     return &(player->sprites[player->state]);
 }
 
@@ -77,6 +83,7 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
     switch (event->key.keysym.sym) {
         case SDLK_LEFT :
             if (player->xVelocity >= 0) {
+                player->state = IDLE;
                 player->time = 0;
             }
             player->xVelocity = -MOVEMENT_SPEED;
@@ -84,25 +91,49 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
             break;
         case SDLK_RIGHT :
             if (player->xVelocity <= 0) {
+                player->state = IDLE;
                 player->time = 0;
             }
             player->xVelocity = MOVEMENT_SPEED;
             player->flip = SDL_FLIP_NONE;
             break;
+        case SDLK_SPACE :
+            if (player->yVelocity == 0) {
+                player->yVelocity = -JUMP_SPEED;
+                player->state = JUMP;
+            }
     }
 }
 
 void movePlayer(Player* player) {
     if (player->xVelocity != 0) {
-        runningAnimation(player);
+        runningPlayerAnimation(player);
     }
-    player->x += player->xVelocity;
-    player->y += player->yVelocity;
-    player->collider.x = player->x;
-    player->collider.y = player->y;
+
+    player->collider.x += player->xVelocity;
+
+    player->yVelocity += GRAVITY;
+    player->collider.y += player->yVelocity;
+    if (player->yVelocity > 0 && player->state == JUMP) {
+        player->state = FALLING;
+    }
+    if((player->collider.y < 0) || (player->collider.y + PLAYER_HEIGHT >  512))
+    {
+        while (player->collider.y + PLAYER_HEIGHT > 512) {
+            player->collider.y -= 1;
+        }
+        while (player->collider.y < 0) {
+            player->collider.y += 1;
+        }
+        player->yVelocity = 0;
+        if (player->state == JUMP || player->state == FALLING) {
+            player->state = IDLE;
+            player->time = 0;
+        }
+    }   
 }
 
-void runningAnimation(Player* player) {
+void runningPlayerAnimation(Player* player) {
     if (SDL_GetTicks() - player->time > 400 || player->xVelocity == 0) {
         if (player->state == IDLE) {
             player->state = RUNNING1;
