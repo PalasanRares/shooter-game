@@ -44,12 +44,12 @@ int renderPlayer(App* app, Player* player) {
         return 0;
     }
 
-    // SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
-    // SDL_RenderDrawRect(app->renderer, &player->collider);
+    SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
+    SDL_RenderDrawRect(app->renderer, &player->collider);
 
     SDL_Rect* currentFrame = getPlayerFrame(player);
     SDL_Rect destination;
-    destination.x = player->collider.x - 32; destination.y = player->collider.y;
+    destination.x = player->collider.x - player->collider.w / 2; destination.y = player->collider.y;
     destination.w = currentFrame->w; destination.h = currentFrame->h;
 
     SDL_RenderCopyEx(app->renderer, spriteSheet, currentFrame, &destination, 0, NULL, player->flip);
@@ -98,7 +98,7 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
             player->flip = SDL_FLIP_NONE;
             break;
         case SDLK_SPACE :
-            if (player->yVelocity == 0) {
+            if (player->yVelocity == 0 && player->state != JUMP && player->state != FALLING) {
                 player->yVelocity = -JUMP_SPEED;
                 player->state = JUMP;
             }

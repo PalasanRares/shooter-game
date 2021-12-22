@@ -4,6 +4,7 @@
 
 #include "App.h"
 #include "Player.h"
+#include "Bullet.h"
 
 int main() {
     App* app = malloc(sizeof(App));
@@ -15,6 +16,7 @@ int main() {
     if (player == NULL) {
         return 0;
     }
+    Bullet* bullet = NULL;
 
     int running = 1;
     while (running) {
@@ -27,7 +29,12 @@ int main() {
                     running = 0;
                     break;
                 case SDL_KEYDOWN :
-                    handlePlayerEvent(&event, player);
+                    if (event.key.keysym.sym == SDLK_z && bullet == NULL) {
+                        bullet = initBullet(player->collider.x + 16, player->collider.y + 54, player->flip);
+                    }
+                    else {
+                        handlePlayerEvent(&event, player);
+                    }
                     break;
                 case SDL_KEYUP :
                     handlePlayerEvent(&event, player);
@@ -38,10 +45,23 @@ int main() {
         if (clearScreen(app) == 0) {
             return 0;
         }
+
         movePlayer(player);
         if (renderPlayer(app, player) == 0) {
             return 0;
         }
+
+        if (bullet != NULL) {
+            if (moveBullet(bullet) == 0) {
+                bullet = NULL;
+            }
+            if (bullet != NULL) {
+                if (renderBullet(app, bullet) == 0) {
+                return 0;
+                }
+            }
+        }
+
         updateScreen(app);
 
         while (SDL_GetTicks() - time < 15) {

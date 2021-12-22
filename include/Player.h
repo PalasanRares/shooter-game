@@ -4,8 +4,8 @@
 #define PLAYER_WIDTH 64
 #define PLAYER_HEIGHT 128
 #define MOVEMENT_SPEED 3
-#define JUMP_SPEED 25
-#define GRAVITY 2
+#define JUMP_SPEED 15
+#define GRAVITY 1
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
