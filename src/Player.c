@@ -105,25 +105,34 @@ void handlePlayerEvent(SDL_Event* event, Player* player) {
     }
 }
 
-void movePlayer(Player* player) {
+void movePlayer(Player* player, Platform** platforms) {
     if (player->xVelocity != 0) {
         runningPlayerAnimation(player);
     }
 
     player->collider.x += player->xVelocity;
 
-    player->yVelocity += GRAVITY;
-    player->collider.y += player->yVelocity;
     if (player->yVelocity > 0 && player->state == JUMP) {
         player->state = FALLING;
     }
-    if((player->collider.y < 0) || (player->collider.y + PLAYER_HEIGHT >  512))
-    {
-        while (player->collider.y + PLAYER_HEIGHT > 512) {
-            player->collider.y -= 1;
+    while (player->collider.x < 0 || (player->collider.x + PLAYER_WIDTH > 512) || (checkPlatformsCollision(player, platforms) && player->yVelocity != 0)) {
+        if (player->xVelocity < 0) {
+            player->collider.x += 1;
         }
-        while (player->collider.y < 0) {
-            player->collider.y += 1;
+        else if (player->xVelocity > 0) {
+            player->collider.x -= 1;
+        }
+    }
+    player->yVelocity += GRAVITY;
+    player->collider.y += player->yVelocity;
+    if((player->collider.y < 0) || (player->collider.y + PLAYER_HEIGHT >  512) || (checkPlatformsCollision(player, platforms))) {
+        while ((player->collider.y < 0) || (player->collider.y + PLAYER_HEIGHT >  512) || (checkPlatformsCollision(player, platforms))) {
+            if (player->yVelocity > 0) {
+                player->collider.y -= 1;
+            }
+            else if (player->yVelocity < 0) {
+                player->collider.y += 1;
+            }
         }
         player->yVelocity = 0;
         if (player->state == JUMP || player->state == FALLING) {
@@ -146,4 +155,29 @@ void runningPlayerAnimation(Player* player) {
         }
         player->time = SDL_GetTicks();
     }
+}
+
+int checkPlatformsCollision(Player* player, Platform** platforms) {
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+    int found = 0;
+
+    for (int i = 0; i < 2; i++) {
+        leftA = player->collider.x;
+        rightA = player->collider.x + player->collider.w;
+        topA = player->collider.y;
+        bottomA = player->collider.y + player->collider.h;
+            
+        leftB = platforms[i]->collider.x;
+        rightB = platforms[i]->collider.x + platforms[i]->collider.w;
+        topB = platforms[i]->collider.y;
+        bottomB = platforms[i]->collider.y + platforms[i]->collider.h;
+
+        if (bottomA > topB && topA < bottomB && rightA > leftB && leftA < rightB) {
+            found = 1;
+        }
+    }
+    return found;
 }

@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "Platform.h"
 
 int main() {
     App* app = malloc(sizeof(App));
@@ -17,6 +18,10 @@ int main() {
         return 0;
     }
     Bullet* bullet = NULL;
+    Platform** platforms = initLevel();
+    if (platforms == NULL) {
+        return 0;
+    }
 
     int running = 1;
     while (running) {
@@ -46,7 +51,11 @@ int main() {
             return 0;
         }
 
-        movePlayer(player);
+        if (renderPlatforms(app, platforms) == 0) {
+            return 0;
+        }
+
+        movePlayer(player, platforms);
         if (renderPlayer(app, player) == 0) {
             return 0;
         }
