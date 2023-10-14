@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <malloc.h>
-#include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 
 #include "App.h"
 #include "Player.h"
@@ -30,10 +31,10 @@ int main() {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
-                case SDL_QUIT :
+                case SDL_EVENT_QUIT :
                     running = 0;
                     break;
-                case SDL_KEYDOWN :
+                case SDL_EVENT_KEY_DOWN :
                     if (event.key.keysym.sym == SDLK_z && bullet == NULL) {
                         bullet = initBullet(player->collider.x + 16, player->collider.y + 54, player->flip);
                     }
@@ -41,7 +42,7 @@ int main() {
                         handlePlayerEvent(&event, player);
                     }
                     break;
-                case SDL_KEYUP :
+                case SDL_EVENT_KEY_UP :
                     handlePlayerEvent(&event, player);
                     break;
             }

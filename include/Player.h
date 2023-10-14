@@ -7,8 +7,8 @@
 #define JUMP_SPEED 25
 #define GRAVITY 1
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 #include "App.h"
 #include "Platform.h"
@@ -18,9 +18,9 @@ enum PlayerState { IDLE = 0, RUNNING1 = 1, RUNNING2 = 2, JUMP = 3, FALLING = 4};
 typedef struct Player {
     int xVelocity, yVelocity;
 
-    SDL_Rect sprites[5];
+    SDL_FRect sprites[5];
 
-    SDL_Rect collider;
+    SDL_FRect collider;
 
     int state;
     int flip;
@@ -32,7 +32,7 @@ Player* initializePlayer(int x, int y);
 
 int renderPlayer(App* app, Player* player);
 
-SDL_Rect* getPlayerFrame(Player* player);
+SDL_FRect* getPlayerFrame(Player* player);
 
 void handlePlayerEvent(SDL_Event* event, Player* player);
 

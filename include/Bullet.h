@@ -4,18 +4,18 @@
 #define BULLET_WIDTH 40;
 #define BULLET_HEIGHT 20;
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 #include "Player.h"
 #include "App.h"
 
 typedef struct Bullet {
-    SDL_Rect collider;
+    SDL_FRect collider;
 
     int xVelocity;
 
-    SDL_Rect sprite;
+    SDL_FRect sprite;
 
     int flip;
 

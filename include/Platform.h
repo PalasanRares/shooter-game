@@ -4,9 +4,9 @@
 #include "App.h"
 
 typedef struct Platform {
-    SDL_Rect collider;
+    SDL_FRect collider;
 
-    SDL_Rect sprite;
+    SDL_FRect sprite;
 
 } Platform;
 

@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include <stdlib.h>
+
 Player* initializePlayer(int x, int y) {
     Player* player = malloc(sizeof(Player));
 
@@ -45,25 +47,25 @@ int renderPlayer(App* app, Player* player) {
     }
 
     SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(app->renderer, &player->collider);
+    SDL_RenderRect(app->renderer, &player->collider);
 
-    SDL_Rect* currentFrame = getPlayerFrame(player);
-    SDL_Rect destination;
+    SDL_FRect* currentFrame = getPlayerFrame(player);
+    SDL_FRect destination;
     destination.x = player->collider.x - player->collider.w / 2; destination.y = player->collider.y;
     destination.w = currentFrame->w; destination.h = currentFrame->h;
 
-    SDL_RenderCopyEx(app->renderer, spriteSheet, currentFrame, &destination, 0, NULL, player->flip);
+    SDL_RenderTextureRotated(app->renderer, spriteSheet, currentFrame, &destination, 0, NULL, player->flip);
 
     SDL_DestroyTexture(spriteSheet);
     return 1;
 }
 
-SDL_Rect* getPlayerFrame(Player* player) {
+SDL_FRect* getPlayerFrame(Player* player) {
     return &(player->sprites[player->state]);
 }
 
 void handlePlayerEvent(SDL_Event* event, Player* player) {
-    if (event->type == SDL_KEYUP) {
+    if (event->type == SDL_EVENT_KEY_UP) {
         switch (event->key.keysym.sym) {
             case SDLK_LEFT :
                 if (player->xVelocity < 0) {

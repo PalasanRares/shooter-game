@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "Bullet.h"
 
 Bullet* initBullet(int x, int y, int flip) {
@@ -45,13 +47,12 @@ int renderBullet(App* app, Bullet* bullet) {
     }
 
     SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(app->renderer, &bullet->collider);
 
-    SDL_Rect destination;
+    SDL_FRect destination;
     destination.x = bullet->collider.x; destination.y = bullet->collider.y;
     destination.w = bullet->sprite.w; destination.h = bullet->sprite.h;
 
-    SDL_RenderCopyEx(app->renderer, sprite, &bullet->sprite, &destination, 0, NULL, bullet->flip);
+    SDL_RenderTextureRotated(app->renderer, sprite, &bullet->sprite, &destination, 0, NULL, bullet->flip);
     
     SDL_DestroyTexture(sprite);
     return 1;

@@ -5,12 +5,12 @@ int initializeApp(App* app, int windowWidth, int windowHeight, char* windowTitle
         printf("%s", SDL_GetError());
         return 0;
     }
-    app->window = SDL_CreateWindow(windowTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, 0);
+    app->window = SDL_CreateWindow(windowTitle, windowWidth, windowHeight, 0);
     if (app->window == NULL) {
         printf("%s", SDL_GetError());
         return 0;
     }
-    app->renderer = SDL_CreateRenderer(app->window, -1, SDL_RENDERER_ACCELERATED);
+    app->renderer = SDL_CreateRenderer(app->window, NULL, SDL_RENDERER_ACCELERATED);
     if (app->renderer == NULL) {
         printf("%s", SDL_GetError());
         return 0;

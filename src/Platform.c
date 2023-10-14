@@ -1,6 +1,7 @@
 #include "Platform.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include <stdlib.h>
 
 Platform* initPlatform(int x, int y) {
     Platform* platform = malloc(sizeof(Platform));
@@ -45,9 +46,9 @@ int renderPlatforms(App* app, Platform** platforms) {
     }
     for (int i = 0; i < 2; i++) {
         SDL_SetRenderDrawColor(app->renderer, 255, 0, 0, 255);
-        SDL_RenderDrawRect(app->renderer, &platforms[i]->collider);
+        SDL_RenderRect(app->renderer, &platforms[i]->collider);
 
-        SDL_RenderCopy(app->renderer, sprite, &platforms[i]->sprite, &platforms[i]->collider);    
+        SDL_RenderTexture(app->renderer, sprite, &platforms[i]->sprite, &platforms[i]->collider);    
     }
     SDL_DestroyTexture(sprite);
     return 1;
