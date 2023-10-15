@@ -1,9 +1,10 @@
 target_sources(shooter
-    PUBLIC
-        App.h
-        Bullet.h
-        Platform.h
-        Player.h
+    PRIVATE
+        Bullet.hpp
+        Platform.hpp
+        Player.hpp
+        WindowRenderer.hpp
+        Color.hpp
 )
 
 target_include_directories(shooter PUBLIC ${CMAKE_CURRENT_LIST_DIR})

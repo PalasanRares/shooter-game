@@ -8,7 +8,7 @@ find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
 find_package(SDL3_image REQUIRED CONFIG REQUIRED COMPONENTS SDL3_image-shared)
 
 # Create your game executable target as usual   
-add_executable(shooter main.c)
+add_executable(shooter main.cpp)
 
 add_subdirectory(src)
 add_subdirectory(include)

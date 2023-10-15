@@ -1,7 +1,7 @@
 target_sources(shooter
     PRIVATE
-        App.c
-        Bullet.c
-        Platform.c
-        Player.c
+        Bullet.cpp
+        Platform.cpp
+        Player.cpp
+        WindowRenderer.cpp
 )
