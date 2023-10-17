@@ -5,3 +5,6 @@ target_sources(shooter
         Player.cpp
         WindowRenderer.cpp
 )
+
+add_subdirectory(component)
+add_subdirectory(utils)
