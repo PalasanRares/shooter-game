@@ -2,25 +2,20 @@
 
 #include "Bullet.hpp"
 
-Bullet::Bullet(int x, int y, SDL_RendererFlip flip) {
-    collider.x = x;
-    collider.y = y;
+Bullet::Bullet(Transform* transform, Sprite* sprite) : transform(transform), sprite(sprite) {
+    collider.x = transform->getPosition().x;
+    collider.y = transform->getPosition().y;
     collider.w = BULLET_WIDTH;
     collider.h = BULLET_HEIGHT;
 
-    if (flip == SDL_FLIP_NONE) {
+    if (sprite->getFlip() == SDL_FLIP_NONE) {
         xVelocity = 6;
     }
     else {
         xVelocity = -6;
     }
 
-    sprite.x = 0;
-    sprite.y = 0;
-    sprite.w = 40;
-    sprite.h = 20;
-
-    flip = flip;
+    sprite->setSource((SDL_FRect) { 0.0f, 0.0f, 40.0f, 20.0f });
 }
 
 bool Bullet::move() {
@@ -32,19 +27,11 @@ bool Bullet::move() {
 }
 
 void Bullet::render(WindowRenderer* windowRenderer) {
-    SDL_Texture* sprite = IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png");
-    if (sprite == NULL) {
-        printf("%s", SDL_GetError());
-        return;
-    }
-
     SDL_SetRenderDrawColor(windowRenderer->getRenderer(), 255, 0, 0, 255);
 
     SDL_FRect destination;
     destination.x = collider.x; destination.y = collider.y;
-    destination.w = this->sprite.w; destination.h = this->sprite.h;
+    destination.w = sprite->getSource()->w; destination.h = sprite->getSource()->h;
 
-    SDL_RenderTextureRotated(windowRenderer->getRenderer(), sprite, &this->sprite, &destination, 0, NULL, flip);
-    
-    SDL_DestroyTexture(sprite);
+    SDL_RenderTextureRotated(windowRenderer->getRenderer(), sprite->getTexture(), sprite->getSource(), &destination, 0, NULL, sprite->getFlip());
 }

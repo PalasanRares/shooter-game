@@ -9,6 +9,8 @@
 
 #include "Player.hpp"
 #include "WindowRenderer.hpp"
+#include "Sprite.hpp"
+#include "Transform.hpp"
 
 class Bullet {
 private:
@@ -16,12 +18,11 @@ private:
 
     int xVelocity;
 
-    SDL_FRect sprite;
-
-    SDL_RendererFlip flip;
+    Transform* transform;
+    Sprite* sprite;
 
 public:
-    Bullet(int x, int y, SDL_RendererFlip flip);
+    Bullet(Transform* transform, Sprite* sprite);
 
     bool move();
 

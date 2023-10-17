@@ -29,7 +29,13 @@ int main() {
                     break;
                 case SDL_EVENT_KEY_DOWN :
                     if (event.key.keysym.sym == SDLK_z && bullet == NULL) {
-                        bullet = new Bullet(player->getCollider()->x + 16, player->getCollider()->y + 54, player->getFlip());
+                        bullet = new Bullet(
+                            new Transform(Vector2(player->getCollider()->x + 16, player->getCollider()->y + 54)),
+                            new Sprite(
+                                IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png"),
+                                (SDL_FRect) { 0, 0, 0, 0 }
+                            )
+                        );
                     }
                     else {
                         player->handleEvent(&event);
