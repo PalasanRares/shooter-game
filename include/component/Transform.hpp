@@ -9,6 +9,8 @@ private:
     Vector2 rotation;
     Vector2 scale;
 
+    float degrees;
+
 public:
     Transform();
     Transform(Vector2 position);
@@ -17,6 +19,8 @@ public:
     Vector2 getPosition();
     Vector2 getRotation();
     Vector2 getScale();
+
+    float getDegrees();
 
     void setPosition(Vector2 position);
     void setRotation(Vector2 rotation);

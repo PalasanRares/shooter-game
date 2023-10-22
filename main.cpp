@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <iostream>
 
 #include "WindowRenderer.hpp"
 #include "Player.hpp"
@@ -17,9 +18,11 @@ int main() {
         return 0;
     }
 
+    float* mouseX;
+    float* mouseY;
     int running = 1;
     while (running) {
-        int time = SDL_GetTicks();
+        int startTime = SDL_GetPerformanceCounter();
 
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -29,13 +32,18 @@ int main() {
                     break;
                 case SDL_EVENT_KEY_DOWN :
                     if (event.key.keysym.sym == SDLK_z && bullet == NULL) {
+                        SDL_GetMouseState(mouseX, mouseY);
                         bullet = new Bullet(
-                            new Transform(Vector2(player->getCollider()->x + 16, player->getCollider()->y + 54)),
+                            new Transform(
+                                Vector2(player->getCollider()->x + 16, player->getCollider()->y + 54),
+                                Vector2(*mouseX - (player->getCollider()->x + 16.0f), *mouseY - (player->getCollider()->y + 54.0f)).normalize(),
+                                Vector2(1, 1)
+                            ),
                             new Sprite(
                                 IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png"),
-                                (SDL_FRect) { 0, 0, 0, 0 },
-                                player->getFlip()
-                            )
+                                (SDL_FRect) { 0, 0, 0, 0 }
+                            ),
+                            10
                         );
                     }
                     else {
@@ -66,9 +74,9 @@ int main() {
 
         windowRenderer->draw();
 
-        while (SDL_GetTicks() - time < 15) {
-            SDL_Delay(15);
-        }
+        int endTime = SDL_GetPerformanceCounter();
+        float elapsedTime = (endTime - startTime) / (float) SDL_GetPerformanceFrequency() * 1000.0f;
+        SDL_Delay(floor(16.666f - elapsedTime));
     }
     SDL_DestroyWindow(windowRenderer->getWindow());
     SDL_DestroyRenderer(windowRenderer->getRenderer());

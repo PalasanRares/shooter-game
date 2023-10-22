@@ -11,18 +11,18 @@
 #include "WindowRenderer.hpp"
 #include "Sprite.hpp"
 #include "Transform.hpp"
+#include "PhysicalBody.hpp"
 
 class Bullet {
 private:
     SDL_FRect collider;
 
-    int xVelocity;
-
     Transform* transform;
     Sprite* sprite;
+    float velocity;
 
 public:
-    Bullet(Transform* transform, Sprite* sprite);
+    Bullet(Transform* transform, Sprite* sprite, float velocity);
     ~Bullet();
 
     bool move();
