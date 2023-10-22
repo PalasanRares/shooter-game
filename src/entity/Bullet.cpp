@@ -18,6 +18,11 @@ Bullet::Bullet(Transform* transform, Sprite* sprite) : transform(transform), spr
     sprite->setSource((SDL_FRect) { 0.0f, 0.0f, 40.0f, 20.0f });
 }
 
+Bullet::~Bullet() {
+    delete transform;
+    delete sprite;
+}
+
 bool Bullet::move() {
     collider.x += xVelocity;
     if (collider.x < 0 || collider.x + collider.w > 512) {

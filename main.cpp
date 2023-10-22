@@ -33,7 +33,8 @@ int main() {
                             new Transform(Vector2(player->getCollider()->x + 16, player->getCollider()->y + 54)),
                             new Sprite(
                                 IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png"),
-                                (SDL_FRect) { 0, 0, 0, 0 }
+                                (SDL_FRect) { 0, 0, 0, 0 },
+                                player->getFlip()
                             )
                         );
                     }
@@ -57,6 +58,7 @@ int main() {
         if (bullet != NULL) {
             if (bullet->move()) {
                 delete bullet;
+                bullet = NULL;
             } else {
                 bullet->render(windowRenderer);
             }

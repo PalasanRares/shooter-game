@@ -23,6 +23,7 @@ private:
 
 public:
     Bullet(Transform* transform, Sprite* sprite);
+    ~Bullet();
 
     bool move();
 

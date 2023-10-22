@@ -11,6 +11,8 @@ private:
 
 public:
     Sprite(SDL_Texture* texture, SDL_FRect source);
+    Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip);
+    ~Sprite();
 
     SDL_Texture* getTexture();
     SDL_FRect* getSource();

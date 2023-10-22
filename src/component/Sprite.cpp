@@ -2,6 +2,12 @@
 
 Sprite::Sprite(SDL_Texture* texture, SDL_FRect source) : texture(texture), source(source), flip(SDL_FLIP_NONE) {}
 
+Sprite::Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip) : texture(texture), source(source), flip(flip) {}
+
+Sprite::~Sprite() {
+    SDL_DestroyTexture(texture);
+}
+
 SDL_Texture* Sprite::getTexture() {
     return texture;
 }
