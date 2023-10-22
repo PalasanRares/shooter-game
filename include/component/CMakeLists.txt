@@ -3,6 +3,7 @@ target_sources(shooter
         Transform.hpp
         Sprite.hpp
         PhysicalBody.hpp
+        Collider.hpp
 )
 
 target_include_directories(shooter PUBLIC ${CMAKE_CURRENT_LIST_DIR})

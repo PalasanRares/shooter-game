@@ -54,13 +54,13 @@ void Player::render(WindowRenderer* windowRenderer) {
 void Player::handleEvent(SDL_Event* event) {
     if (event->type == SDL_EVENT_KEY_UP) {
         switch (event->key.keysym.sym) {
-            case SDLK_LEFT :
+            case SDLK_a :
                 if (xVelocity < 0) {
                     xVelocity = 0;
                     state = IDLE;
                 }
                 break;
-            case SDLK_RIGHT :
+            case SDLK_d :
                 if (xVelocity > 0) {
                     xVelocity = 0;
                     state = IDLE;
@@ -70,7 +70,7 @@ void Player::handleEvent(SDL_Event* event) {
         return;
     }
     switch (event->key.keysym.sym) {
-        case SDLK_LEFT :
+        case SDLK_a :
             if (xVelocity >= 0) {
                 state = IDLE;
                 time = 0;
@@ -78,7 +78,7 @@ void Player::handleEvent(SDL_Event* event) {
             xVelocity = -MOVEMENT_SPEED;
             flip = SDL_FLIP_HORIZONTAL;
             break;
-        case SDLK_RIGHT :
+        case SDLK_d :
             if (xVelocity <= 0) {
                 state = IDLE;
                 time = 0;

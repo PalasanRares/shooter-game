@@ -44,3 +44,7 @@ void Transform::setRotation(Vector2 rotation) {
 void Transform::setScale(Vector2 scale) {
     this->scale = scale;
 }
+
+void Transform::movePosition(const Vector2& position) {
+    this->position = this->position + position;
+}

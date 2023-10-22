@@ -25,6 +25,8 @@ public:
     void setPosition(Vector2 position);
     void setRotation(Vector2 rotation);
     void setScale(Vector2 scale);
+
+    void movePosition(const Vector2& position);
 };
 
 #endif

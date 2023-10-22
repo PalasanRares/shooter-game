@@ -9,6 +9,9 @@ struct Vector2 {
 
     float magnitude();
     Vector2 normalize();
+
+    Vector2 operator+(const Vector2& vector);
+    Vector2 operator*(float number);
 };
 
 #endif
