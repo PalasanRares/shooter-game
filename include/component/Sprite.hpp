@@ -10,6 +10,7 @@ private:
     SDL_RendererFlip flip;
 
 public:
+    Sprite(SDL_Texture* texture);
     Sprite(SDL_Texture* texture, SDL_FRect source);
     Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip);
     ~Sprite();

@@ -159,10 +159,10 @@ int Player::checkPlatformsCollision(Platform** platforms) {
         topA = collider.y;
         bottomA = collider.y + collider.h;
             
-        leftB = platforms[i]->getCollider().x;
-        rightB = platforms[i]->getCollider().x + platforms[i]->getCollider().w;
-        topB = platforms[i]->getCollider().y;
-        bottomB = platforms[i]->getCollider().y + platforms[i]->getCollider().h;
+        leftB = platforms[i]->getCollider()->getShape().x;
+        rightB = platforms[i]->getCollider()->getShape().x + platforms[i]->getCollider()->getShape().w;
+        topB = platforms[i]->getCollider()->getShape().y;
+        bottomB = platforms[i]->getCollider()->getShape().y + platforms[i]->getCollider()->getShape().h;
 
         if (bottomA > topB && topA < bottomB && rightA > leftB && leftA < rightB) {
             found = 1;

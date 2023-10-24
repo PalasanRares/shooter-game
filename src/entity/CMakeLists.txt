@@ -1,4 +1,5 @@
 target_sources(shooter
     PRIVATE
-        Bullet.cpp   
+        Bullet.cpp
+        Platform.cpp
 )

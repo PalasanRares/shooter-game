@@ -13,10 +13,7 @@ int main() {
     WindowRenderer* windowRenderer = new WindowRenderer(512, 512, "Shooter");
     Player* player = new Player(25, 25);
     Bullet* bullet = NULL;
-    Platform** platforms = Platform::initLevel();
-    if (platforms == NULL) {
-        return 0;
-    }
+    Platform** platforms = Platform::initLevel(windowRenderer);
 
     float* mouseX;
     float* mouseY;
@@ -39,10 +36,7 @@ int main() {
                                 Vector2(*mouseX - (player->getCollider()->x + 16.0f), *mouseY - (player->getCollider()->y + 54.0f)).normalize(),
                                 Vector2(1, 1)
                             ),
-                            new Sprite(
-                                IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png"),
-                                (SDL_FRect) { 0, 0, 0, 0 }
-                            ),
+                            new Sprite(IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png")),
                             10
                         );
                     }

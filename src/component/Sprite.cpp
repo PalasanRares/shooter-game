@@ -1,5 +1,7 @@
 #include "Sprite.hpp"
 
+Sprite::Sprite(SDL_Texture* texture) : texture(texture), source((SDL_FRect) { 0, 0, 0, 0 }), flip(SDL_FLIP_NONE) {}
+
 Sprite::Sprite(SDL_Texture* texture, SDL_FRect source) : texture(texture), source(source), flip(SDL_FLIP_NONE) {}
 
 Sprite::Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip) : texture(texture), source(source), flip(flip) {}
