@@ -1,6 +1,7 @@
 #include "Player.hpp"
 
 #include <stdlib.h>
+#include <iostream>
 
 Player::Player(int x, int y) {
     xVelocity = 0;
@@ -29,9 +30,11 @@ Player::Player(int x, int y) {
     state = IDLE;
     flip = SDL_FLIP_NONE;
     time = SDL_GetTicks();
+
+    weapon = new Weapon(new Transform());
 }
 
-void Player::render(WindowRenderer* windowRenderer) {
+void Player::render(WindowRenderer* windowRenderer, float mouseX, float mouseY) {
     SDL_Texture* spriteSheet = IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/PlayerSpritesheet.png");
     if (spriteSheet == NULL) {
         printf("%s", SDL_GetError());
@@ -49,6 +52,22 @@ void Player::render(WindowRenderer* windowRenderer) {
     SDL_RenderTextureRotated(windowRenderer->getRenderer(), spriteSheet, currentFrame, &destination, 0, NULL, flip);
 
     SDL_DestroyTexture(spriteSheet);
+    
+    // Update weapon coordinates based on current player position (TODO should be handled in move function later)
+    float weaponRadius = 100;
+    Vector2 weaponRotation = Vector2(mouseX - (collider.x + collider.w / 2), mouseY - (collider.y + collider.h / 2)).normalize();
+    weapon->getTransform()->setRotation(weaponRotation);
+    weapon->getTransform()->setPosition(Vector2(
+        collider.x + cos(weapon->getTransform()->getDegreesInRadians()) * weaponRadius,
+        collider.y + collider.h / 4 + sin(weapon->getTransform()->getDegreesInRadians()) * weaponRadius
+    ));
+
+    // Draw the weapon
+    SDL_FRect weaponDestination;
+    weaponDestination.x = weapon->getTransform()->getPosition().x; weaponDestination.y = weapon->getTransform()->getPosition().y;
+    weaponDestination.w = weapon->getSprite()->getSource()->w; weaponDestination.h = weapon->getSprite()->getSource()->h;
+    SDL_RenderRect(windowRenderer->getRenderer(), &weaponDestination);
+    SDL_RenderTextureRotated(windowRenderer->getRenderer(), weapon->getSprite()->getTexture(), weapon->getSprite()->getSource(), &weaponDestination, weapon->getTransform()->getDegrees(), nullptr, SDL_FLIP_NONE);
 }
 
 void Player::handleEvent(SDL_Event* event) {
@@ -177,4 +196,8 @@ SDL_FRect* Player::getCollider() {
 
 SDL_RendererFlip Player::getFlip() {
     return flip;
+}
+
+Weapon* Player::getWeapon() {
+    return weapon;
 }

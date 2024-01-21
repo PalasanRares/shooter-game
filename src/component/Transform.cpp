@@ -2,18 +2,21 @@
 
 #include <cmath>
 
-#define PI 3.14159265f
+void Transform::recalculateDegrees() {
+    degrees = atan(rotation.y / rotation.x) * 180.0f / M_PI;
+    if (rotation.x < 0) degrees += 180.f;
+}
 
 Transform::Transform() : position(Vector2()), rotation(Vector2()), scale(Vector2()) {
-    degrees = atan(rotation.y / rotation.x) * 180.0f / PI;
+    recalculateDegrees();
 }
 
 Transform::Transform(Vector2 position) : position(position), rotation(Vector2()), scale(Vector2()) {
-    degrees = atan(rotation.y / rotation.x) * 180.0f / PI;
+    recalculateDegrees();
 }
 
 Transform::Transform(Vector2 position, Vector2 rotation, Vector2 scale) : position(position), rotation(rotation), scale(scale) {
-    degrees = atan(rotation.y / rotation.x) * 180.0f / PI;
+    recalculateDegrees();
 }
 
 Vector2 Transform::getPosition() {
@@ -32,13 +35,17 @@ float Transform::getDegrees() {
     return degrees;
 }
 
+float Transform::getDegreesInRadians() {
+    return degrees * M_PI / 180.f;
+}
+
 void Transform::setPosition(Vector2 position) {
     this->position = position;
 }
 
 void Transform::setRotation(Vector2 rotation) {
     this->rotation = rotation;
-    degrees = atan(rotation.y / rotation.x) * 180.0f / PI;
+    recalculateDegrees();
 }
 
 void Transform::setScale(Vector2 scale) {

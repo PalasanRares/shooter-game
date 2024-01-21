@@ -6,12 +6,16 @@
 
 class WindowRenderer {
 private:
+    static WindowRenderer* instance;
+
     SDL_Window* window;
     SDL_Renderer* renderer;
     int width, height;
 
+    WindowRenderer();
+
 public:
-    WindowRenderer(int width, int height, std::string title);
+    static WindowRenderer* getInstance();
 
     void clear();
 

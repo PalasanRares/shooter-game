@@ -15,10 +15,6 @@ Bullet::Bullet(Transform* transform, Sprite* sprite, float velocity) : transform
     sprite->setSource(
         (SDL_FRect) { 0.0f, 0.0f, BULLET_WIDTH, BULLET_HEIGHT }
     );
-    
-    if (transform->getRotation().x < 0) {
-        sprite->setFlip(SDL_FLIP_HORIZONTAL);
-    }
 }
 
 Bullet::~Bullet() {

@@ -12,6 +12,7 @@
 
 #include "WindowRenderer.hpp"
 #include "Platform.hpp"
+#include "Weapon.hpp"
 
 enum PlayerState { IDLE = 0, RUNNING1 = 1, RUNNING2 = 2, JUMP = 3, FALLING = 4};
 
@@ -26,10 +27,12 @@ private:
     SDL_RendererFlip flip;
     int time;
 
+    Weapon* weapon;
+
 public:
     Player(int x, int y);
 
-    void render(WindowRenderer* windowRenderer);
+    void render(WindowRenderer* windowRenderer, float mouseX, float mouseY);
 
     void handleEvent(SDL_Event* event);
 
@@ -42,6 +45,8 @@ public:
     SDL_FRect* getCollider();
 
     SDL_RendererFlip getFlip();
+
+    Weapon* getWeapon();
 };
 
 #endif

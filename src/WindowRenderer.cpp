@@ -3,12 +3,18 @@
 
 #include <iostream>
 
-WindowRenderer::WindowRenderer(int width, int height, std::string title) : width(width), height(height) {
+#define WINDOW_WIDTH 512
+#define WINDOW_HEIGHT 512
+#define WINDOW_TITLE "Shooter"
+
+WindowRenderer* WindowRenderer::instance = nullptr;
+
+WindowRenderer::WindowRenderer() : width(WINDOW_WIDTH), height(WINDOW_HEIGHT) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         std::cout << SDL_GetError();
         throw;
     }
-    window = SDL_CreateWindow(title.c_str(), width, height, 0);
+    window = SDL_CreateWindow(WINDOW_TITLE, width, height, 0);
     if (window == NULL) {
         std::cout << SDL_GetError();
         throw;
@@ -18,6 +24,13 @@ WindowRenderer::WindowRenderer(int width, int height, std::string title) : width
         std::cout << SDL_GetError();
         throw;
     }
+}
+
+WindowRenderer* WindowRenderer::getInstance() {
+    if (instance == nullptr) {
+        instance = new WindowRenderer();
+    }
+    return instance;
 }
 
 void WindowRenderer::clear() {

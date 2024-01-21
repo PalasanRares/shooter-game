@@ -11,6 +11,8 @@ private:
 
     float degrees;
 
+    void recalculateDegrees();
+
 public:
     Transform();
     Transform(Vector2 position);
@@ -21,6 +23,7 @@ public:
     Vector2 getScale();
 
     float getDegrees();
+    float getDegreesInRadians();
 
     void setPosition(Vector2 position);
     void setRotation(Vector2 rotation);

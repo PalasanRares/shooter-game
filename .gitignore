@@ -3,3 +3,4 @@ obj
 Shooter
 .vscode
 build
+**/.DS_Store

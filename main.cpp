@@ -10,13 +10,12 @@
 #include "Platform.hpp"
 
 int main() {
-    WindowRenderer* windowRenderer = new WindowRenderer(512, 512, "Shooter");
+    WindowRenderer* windowRenderer = WindowRenderer::getInstance();
     Player* player = new Player(25, 25);
     Bullet* bullet = NULL;
     Platform** platforms = Platform::initLevel(windowRenderer);
 
-    float* mouseX;
-    float* mouseY;
+    float mouseX, mouseY;
     int running = 1;
     while (running) {
         int startTime = SDL_GetPerformanceCounter();
@@ -28,12 +27,12 @@ int main() {
                     running = 0;
                     break;
                 case SDL_EVENT_KEY_DOWN :
-                    if (event.key.keysym.sym == SDLK_z && bullet == NULL) {
-                        SDL_GetMouseState(mouseX, mouseY);
+                    if (event.key.keysym.sym == SDLK_z && bullet == nullptr) {
+                        SDL_GetMouseState(&mouseX, &mouseY);
                         bullet = new Bullet(
                             new Transform(
-                                Vector2(player->getCollider()->x + 16, player->getCollider()->y + 54),
-                                Vector2(*mouseX - (player->getCollider()->x + 16.0f), *mouseY - (player->getCollider()->y + 54.0f)).normalize(),
+                                Vector2(player->getWeapon()->getTransform()->getPosition().x + 16, player->getWeapon()->getTransform()->getPosition().y + 16),
+                                Vector2(mouseX - (player->getCollider()->x + 36.0f), mouseY - (player->getCollider()->y + 64.0f)).normalize(),
                                 Vector2(1, 1)
                             ),
                             new Sprite(IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png")),
@@ -55,7 +54,8 @@ int main() {
         Platform::renderPlatforms(windowRenderer, platforms);
 
         player->move(platforms);
-        player->render(windowRenderer);
+        SDL_GetMouseState(&mouseX, &mouseY);
+        player->render(windowRenderer, mouseX, mouseY);
 
         if (bullet != NULL) {
             if (bullet->move()) {
