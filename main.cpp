@@ -11,7 +11,7 @@
 
 int main() {
     WindowRenderer* windowRenderer = WindowRenderer::getInstance();
-    Player* player = new Player(25, 25);
+    Player* player = new Player(windowRenderer, 25, 25);
     Bullet* bullet = NULL;
     Platform** platforms = Platform::initLevel(windowRenderer);
 
@@ -32,7 +32,8 @@ int main() {
                         bullet = new Bullet(
                             new Transform(
                                 Vector2(player->getWeapon()->getTransform()->getPosition().x + 16, player->getWeapon()->getTransform()->getPosition().y + 16),
-                                Vector2(mouseX - (player->getCollider()->x + 36.0f), mouseY - (player->getCollider()->y + 64.0f)).normalize(),
+                                // TODO Modify this to use the transform instead of collider
+                                Vector2(mouseX - (player->getCollider()->getShape().x + 36.0f), mouseY - (player->getCollider()->getShape().y + 64.0f)).normalize(),
                                 Vector2(1, 1)
                             ),
                             new Sprite(IMG_LoadTexture(windowRenderer->getRenderer(), "./sprites/Bullet.png")),

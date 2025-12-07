@@ -14,23 +14,28 @@
 #include "Platform.hpp"
 #include "Weapon.hpp"
 
+#include "Transform.hpp"
+#include "PhysicalBody.hpp"
+#include "Animation.hpp"
+#include "Collider.hpp"
+
 enum PlayerState { IDLE = 0, RUNNING1 = 1, RUNNING2 = 2, JUMP = 3, FALLING = 4};
 
 class Player {
 private:
-    int xVelocity, yVelocity;
+    Transform* transform;
+    PhysicalBody* physicalBody;
 
-    SDL_FRect sprites[5];
-    SDL_FRect collider;
+    Animation* animation;
+    Collider* collider;
 
     int state;
-    SDL_FlipMode flip;
     int time;
 
     Weapon* weapon;
 
 public:
-    Player(int x, int y);
+    Player(WindowRenderer* windowRenderer, float x, float y);
 
     void render(WindowRenderer* windowRenderer, float mouseX, float mouseY);
 
@@ -42,7 +47,7 @@ public:
 
     int checkPlatformsCollision(Platform** platforms);
 
-    SDL_FRect* getCollider();
+    Collider* getCollider();
 
     SDL_FlipMode getFlip();
 

@@ -1,6 +1,5 @@
 target_sources(shooter
     PRIVATE
-        Player.cpp
         WindowRenderer.cpp
 )
 

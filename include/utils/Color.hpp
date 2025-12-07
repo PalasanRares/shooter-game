@@ -5,6 +5,6 @@ typedef struct {
     int r, g, b, a;
 } Color;
 
-const Color BACKGROUND_COLOR = { 200, 200, 200, 255 };
+const Color BACKGROUND_COLOR = { 200, 200, 200, 0 };
 
 #endif

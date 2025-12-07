@@ -4,4 +4,5 @@ target_sources(shooter
         Sprite.cpp
         PhysicalBody.cpp
         Collider.cpp
+        Animation.cpp
 )

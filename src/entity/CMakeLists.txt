@@ -3,4 +3,5 @@ target_sources(shooter
         Bullet.cpp
         Platform.cpp
         Weapon.cpp
+        Player.cpp
 )
