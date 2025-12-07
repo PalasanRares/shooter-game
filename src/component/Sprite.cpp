@@ -4,7 +4,7 @@ Sprite::Sprite(SDL_Texture* texture) : texture(texture), source((SDL_FRect) { 0,
 
 Sprite::Sprite(SDL_Texture* texture, SDL_FRect source) : texture(texture), source(source), flip(SDL_FLIP_NONE) {}
 
-Sprite::Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip) : texture(texture), source(source), flip(flip) {}
+Sprite::Sprite(SDL_Texture* texture, SDL_FRect source, SDL_FlipMode flip) : texture(texture), source(source), flip(flip) {}
 
 Sprite::~Sprite() {
     SDL_DestroyTexture(texture);
@@ -18,7 +18,7 @@ SDL_FRect* Sprite::getSource() {
     return &source;
 }
 
-SDL_RendererFlip Sprite::getFlip() {
+SDL_FlipMode Sprite::getFlip() {
     return flip;
 }
 
@@ -30,6 +30,6 @@ void Sprite::setSource(SDL_FRect source) {
     this->source = source;
 }
 
-void Sprite::setFlip(SDL_RendererFlip flip) {
+void Sprite::setFlip(SDL_FlipMode flip) {
     this->flip = flip;
 }

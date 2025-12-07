@@ -27,7 +27,7 @@ int main() {
                     running = 0;
                     break;
                 case SDL_EVENT_KEY_DOWN :
-                    if (event.key.keysym.sym == SDLK_z && bullet == nullptr) {
+                    if (event.key.key == SDLK_Z && bullet == nullptr) {
                         SDL_GetMouseState(&mouseX, &mouseY);
                         bullet = new Bullet(
                             new Transform(
@@ -70,7 +70,7 @@ int main() {
 
         int endTime = SDL_GetPerformanceCounter();
         float elapsedTime = (endTime - startTime) / (float) SDL_GetPerformanceFrequency() * 1000.0f;
-        SDL_Delay(floor(16.666f - elapsedTime));
+        SDL_Delay(SDL_floor(16.666f - elapsedTime));
     }
     SDL_DestroyWindow(windowRenderer->getWindow());
     SDL_DestroyRenderer(windowRenderer->getRenderer());

@@ -58,8 +58,8 @@ void Player::render(WindowRenderer* windowRenderer, float mouseX, float mouseY) 
     Vector2 weaponRotation = Vector2(mouseX - (collider.x + collider.w / 2), mouseY - (collider.y + collider.h / 2)).normalize();
     weapon->getTransform()->setRotation(weaponRotation);
     weapon->getTransform()->setPosition(Vector2(
-        collider.x + cos(weapon->getTransform()->getDegreesInRadians()) * weaponRadius,
-        collider.y + collider.h / 4 + sin(weapon->getTransform()->getDegreesInRadians()) * weaponRadius
+        collider.x + SDL_cos(weapon->getTransform()->getDegreesInRadians()) * weaponRadius,
+        collider.y + collider.h / 4 + SDL_sin(weapon->getTransform()->getDegreesInRadians()) * weaponRadius
     ));
 
     // Draw the weapon
@@ -72,14 +72,14 @@ void Player::render(WindowRenderer* windowRenderer, float mouseX, float mouseY) 
 
 void Player::handleEvent(SDL_Event* event) {
     if (event->type == SDL_EVENT_KEY_UP) {
-        switch (event->key.keysym.sym) {
-            case SDLK_a :
+        switch (event->key.key) {
+            case SDLK_A :
                 if (xVelocity < 0) {
                     xVelocity = 0;
                     state = IDLE;
                 }
                 break;
-            case SDLK_d :
+            case SDLK_D :
                 if (xVelocity > 0) {
                     xVelocity = 0;
                     state = IDLE;
@@ -88,8 +88,8 @@ void Player::handleEvent(SDL_Event* event) {
         }
         return;
     }
-    switch (event->key.keysym.sym) {
-        case SDLK_a :
+    switch (event->key.key) {
+        case SDLK_A :
             if (xVelocity >= 0) {
                 state = IDLE;
                 time = 0;
@@ -97,7 +97,7 @@ void Player::handleEvent(SDL_Event* event) {
             xVelocity = -MOVEMENT_SPEED;
             flip = SDL_FLIP_HORIZONTAL;
             break;
-        case SDLK_d :
+        case SDLK_D :
             if (xVelocity <= 0) {
                 state = IDLE;
                 time = 0;
@@ -194,7 +194,7 @@ SDL_FRect* Player::getCollider() {
     return &collider;
 }
 
-SDL_RendererFlip Player::getFlip() {
+SDL_FlipMode Player::getFlip() {
     return flip;
 }
 

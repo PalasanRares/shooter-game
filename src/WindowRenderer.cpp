@@ -10,7 +10,7 @@
 WindowRenderer* WindowRenderer::instance = nullptr;
 
 WindowRenderer::WindowRenderer() : width(WINDOW_WIDTH), height(WINDOW_HEIGHT) {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    if (!SDL_Init(SDL_INIT_VIDEO)) {
         std::cout << SDL_GetError();
         throw;
     }
@@ -19,7 +19,7 @@ WindowRenderer::WindowRenderer() : width(WINDOW_WIDTH), height(WINDOW_HEIGHT) {
         std::cout << SDL_GetError();
         throw;
     }
-    renderer = SDL_CreateRenderer(window, NULL, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(window, NULL);
     if (renderer == NULL) {
         std::cout << SDL_GetError();
         throw;

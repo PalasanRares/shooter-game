@@ -4,3 +4,5 @@ Shooter
 .vscode
 build
 **/.DS_Store
+SDL
+SDL_image

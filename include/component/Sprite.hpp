@@ -7,21 +7,21 @@ class Sprite {
 private:
     SDL_Texture* texture;
     SDL_FRect source;
-    SDL_RendererFlip flip;
+    SDL_FlipMode flip;
 
 public:
     Sprite(SDL_Texture* texture);
     Sprite(SDL_Texture* texture, SDL_FRect source);
-    Sprite(SDL_Texture* texture, SDL_FRect source, SDL_RendererFlip flip);
+    Sprite(SDL_Texture* texture, SDL_FRect source, SDL_FlipMode flip);
     ~Sprite();
 
     SDL_Texture* getTexture();
     SDL_FRect* getSource();
-    SDL_RendererFlip getFlip();
+    SDL_FlipMode getFlip();
 
     void setTexture(SDL_Texture* texture);
     void setSource(SDL_FRect source);
-    void setFlip(SDL_RendererFlip flip);
+    void setFlip(SDL_FlipMode flip);
 };
 
 #endif

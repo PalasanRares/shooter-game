@@ -24,7 +24,7 @@ private:
     SDL_FRect collider;
 
     int state;
-    SDL_RendererFlip flip;
+    SDL_FlipMode flip;
     int time;
 
     Weapon* weapon;
@@ -44,7 +44,7 @@ public:
 
     SDL_FRect* getCollider();
 
-    SDL_RendererFlip getFlip();
+    SDL_FlipMode getFlip();
 
     Weapon* getWeapon();
 };
