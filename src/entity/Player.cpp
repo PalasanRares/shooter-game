@@ -56,7 +56,7 @@ void Player::render(WindowRenderer* windowRenderer, float mouseX, float mouseY) 
     // Update weapon coordinates based on current player position (TODO should be handled in move function later)
     float weaponRadius = 100;
     Vector2 weaponRotation = Vector2(
-        mouseX - (currentPosition.x + currentFrame.w / 2), 
+        mouseX - (currentPosition.x + currentFrame.w / 4), 
         mouseY - (currentPosition.y + currentFrame.h / 2)
     ).normalize();
     weapon->getTransform()->setRotation(weaponRotation);
