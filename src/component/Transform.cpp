@@ -7,11 +7,11 @@ void Transform::recalculateDegrees() {
     if (rotation.x < 0) degrees += 180.f;
 }
 
-Transform::Transform() : position(Vector2()), rotation(Vector2()), scale(Vector2()) {
+Transform::Transform() : position(Vector2()), rotation(Vector2()), scale(Vector2(1, 1)) {
     recalculateDegrees();
 }
 
-Transform::Transform(Vector2 position) : position(position), rotation(Vector2()), scale(Vector2()) {
+Transform::Transform(Vector2 position) : position(position), rotation(Vector2()), scale(Vector2(1, 1)) {
     recalculateDegrees();
 }
 

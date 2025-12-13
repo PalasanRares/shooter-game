@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Bullet.hpp"
+#include "WindowRenderer.hpp"
 
 #define BULLET_WIDTH 40.0f
 #define BULLET_HEIGHT 20.0f
@@ -27,7 +28,7 @@ bool Bullet::move() {
     transform->movePosition(transform->getRotation() * velocity);
     collider->update(transform->getPosition());
     SDL_FRect colliderShape = collider->getShape();
-    if (colliderShape.x < 0 || colliderShape.x + colliderShape.w > 512 || colliderShape.y < 0 || colliderShape.y + colliderShape.h > 512) {
+    if (colliderShape.x < 0 || colliderShape.x + colliderShape.w > WINDOW_WIDTH || colliderShape.y < 0 || colliderShape.y + colliderShape.h > WINDOW_HEIGHT) {
         return true;
     }
     return false;

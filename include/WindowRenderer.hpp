@@ -4,6 +4,9 @@
 #include <SDL3/SDL.h>
 #include <string>
 
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
+
 class WindowRenderer {
 private:
     static WindowRenderer* instance;

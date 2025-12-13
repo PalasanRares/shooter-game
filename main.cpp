@@ -8,12 +8,15 @@
 #include "Player.hpp"
 #include "Bullet.hpp"
 #include "Platform.hpp"
+#include "LevelLoader.hpp"
 
 int main() {
     WindowRenderer* windowRenderer = WindowRenderer::getInstance();
     Player* player = new Player(windowRenderer, 25, 25);
     Bullet* bullet = NULL;
     Platform** platforms = Platform::initLevel(windowRenderer);
+
+    LevelLoader::getInstance().load("./levels/demo_level.csv");
 
     float mouseX, mouseY;
     int running = 1;

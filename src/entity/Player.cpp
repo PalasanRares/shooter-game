@@ -132,7 +132,7 @@ void Player::move(Platform** platforms) {
     if (currentVelocity.y > 0 && state == JUMP) {
         state = FALLING;
     }
-    while (currentPosition.x < 0 || (currentPosition.x + PLAYER_WIDTH > 512) || (checkPlatformsCollision(platforms) && currentVelocity.y != 0)) {
+    while (currentPosition.x < 0 || (currentPosition.x + PLAYER_WIDTH > WINDOW_WIDTH) || (checkPlatformsCollision(platforms))) {
         if (currentVelocity.x < 0) {
             currentPosition.x += 1;
         }
@@ -146,8 +146,8 @@ void Player::move(Platform** platforms) {
     currentPosition.y += currentVelocity.y;
     collider->update(currentPosition);
 
-    if((currentPosition.y < 0) || (currentPosition.y + PLAYER_HEIGHT >  512) || (checkPlatformsCollision(platforms))) {
-        while ((currentPosition.y < 0) || (currentPosition.y + PLAYER_HEIGHT >  512) || (checkPlatformsCollision(platforms))) {
+    if((currentPosition.y < 0) || (currentPosition.y + PLAYER_HEIGHT >  WINDOW_HEIGHT) || (checkPlatformsCollision(platforms))) {
+        while ((currentPosition.y < 0) || (currentPosition.y + PLAYER_HEIGHT >  WINDOW_HEIGHT) || (checkPlatformsCollision(platforms))) {
             if (currentVelocity.y > 0) {
                 currentPosition.y -= 1;
             }
@@ -189,7 +189,7 @@ int Player::checkPlatformsCollision(Platform** platforms) {
     int found = 0;
 
     SDL_FRect colliderShape = collider->getShape();
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 3; i++) {
         leftA = colliderShape.x;
         rightA = colliderShape.x + colliderShape.w;
         topA = colliderShape.y;

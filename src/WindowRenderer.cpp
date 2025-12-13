@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-#define WINDOW_WIDTH 512
-#define WINDOW_HEIGHT 512
 #define WINDOW_TITLE "Shooter"
 
 WindowRenderer* WindowRenderer::instance = nullptr;

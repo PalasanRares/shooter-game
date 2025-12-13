@@ -6,3 +6,4 @@ target_sources(shooter
 add_subdirectory(component)
 add_subdirectory(utils)
 add_subdirectory(entity)
+add_subdirectory(system)
