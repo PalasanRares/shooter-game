@@ -1,1 +1,5 @@
-PLATFORM,66,256,64,64,./sprites/Platform.png
+PLATFORM,0,656,64,64,./sprites/Platform.png
+PLATFORM,64,656,64,64,./sprites/Platform.png
+PLATFORM,128,656,64,64,./sprites/Platform.png
+PLATFORM,192,592,64,64,./sprites/Platform.png
+PLATFORM,192,528,64,64,./sprites/Platform.png

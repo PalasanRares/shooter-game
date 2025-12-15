@@ -47,6 +47,6 @@ SDL_Window* WindowRenderer::getWindow() {
     return window;
 }
 
-SDL_Renderer* WindowRenderer::getRenderer() {
+SDL_Renderer* WindowRenderer::getRenderer() const {
     return renderer;
 }

@@ -41,11 +41,11 @@ public:
 
     void handleEvent(SDL_Event* event);
 
-    void move(Platform** platforms);
+    void move(std::vector<Platform*> platforms);
 
     void runningAnimation();
 
-    int checkPlatformsCollision(Platform** platforms);
+    int checkPlatformsCollision(std::vector<Platform*> platforms);
 
     Collider* getCollider();
 

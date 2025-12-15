@@ -14,9 +14,19 @@ int main() {
     WindowRenderer* windowRenderer = WindowRenderer::getInstance();
     Player* player = new Player(windowRenderer, 25, 25);
     Bullet* bullet = NULL;
-    Platform** platforms = Platform::initLevel(windowRenderer);
+    std::vector<Platform*> platforms;
 
-    LevelLoader::getInstance().load("./levels/demo_level.csv");
+    std::vector<LevelObject*> levelObjects = LevelLoader::getInstance().load(
+        *windowRenderer, 
+        "./levels/demo_level.csv"
+    );
+
+    for (LevelObject* levelObject : levelObjects) {
+        switch (levelObject->type) {
+            case LevelObjectType::PLATFORM:
+                platforms.push_back((Platform*) levelObject->object);
+        }
+    }
 
     float mouseX, mouseY;
     int running = 1;

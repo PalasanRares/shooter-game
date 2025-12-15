@@ -119,7 +119,7 @@ void Player::handleEvent(SDL_Event* event) {
     physicalBody->setVelocity(currentVelocity);
 }
 
-void Player::move(Platform** platforms) {
+void Player::move(std::vector<Platform*> platforms) {
     Vector2 currentVelocity = physicalBody->getVelocity();
     Vector2 currentPosition = transform->getPosition();
     if (currentVelocity.x != 0) {
@@ -181,7 +181,7 @@ void Player::runningAnimation() {
     }
 }
 
-int Player::checkPlatformsCollision(Platform** platforms) {
+int Player::checkPlatformsCollision(std::vector<Platform*> platforms) {
     int leftA, leftB;
     int rightA, rightB;
     int topA, topB;
@@ -189,16 +189,16 @@ int Player::checkPlatformsCollision(Platform** platforms) {
     int found = 0;
 
     SDL_FRect colliderShape = collider->getShape();
-    for (int i = 0; i < 3; i++) {
+    for (Platform* platform : platforms) {
         leftA = colliderShape.x;
         rightA = colliderShape.x + colliderShape.w;
         topA = colliderShape.y;
         bottomA = colliderShape.y + colliderShape.h;
             
-        leftB = platforms[i]->getCollider()->getShape().x;
-        rightB = platforms[i]->getCollider()->getShape().x + platforms[i]->getCollider()->getShape().w;
-        topB = platforms[i]->getCollider()->getShape().y;
-        bottomB = platforms[i]->getCollider()->getShape().y + platforms[i]->getCollider()->getShape().h;
+        leftB = platform->getCollider()->getShape().x;
+        rightB = platform->getCollider()->getShape().x + platform->getCollider()->getShape().w;
+        topB = platform->getCollider()->getShape().y;
+        bottomB = platform->getCollider()->getShape().y + platform->getCollider()->getShape().h;
 
         if (bottomA > topB && topA < bottomB && rightA > leftB && leftA < rightB) {
             found = 1;

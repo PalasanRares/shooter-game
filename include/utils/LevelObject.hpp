@@ -2,6 +2,7 @@
 #define __LEVEL_OBJECT_HPP__
 
 enum LevelObjectType {
+    UNDEFINED,
     PLATFORM
 };
 

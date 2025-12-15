@@ -25,7 +25,7 @@ public:
     void draw();
 
     SDL_Window* getWindow();
-    SDL_Renderer* getRenderer();
+    SDL_Renderer* getRenderer() const;
 };
 
 #endif

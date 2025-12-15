@@ -1,6 +1,8 @@
 #ifndef _PLATFORM_HPP_
 #define _PLATFORM_HPP_
 
+#include <vector>
+
 #include "WindowRenderer.hpp"
 #include "Collider.hpp"
 #include "Sprite.hpp"
@@ -18,9 +20,7 @@ public:
     Sprite* getSprite();
     Collider* getCollider();
 
-    static Platform** initLevel(WindowRenderer* windowRenderer);
-
-    static void renderPlatforms(WindowRenderer* windowRenderer, Platform** platforms);
+    static void renderPlatforms(WindowRenderer* windowRenderer, std::vector<Platform*> platforms);
 };
 
 #endif
